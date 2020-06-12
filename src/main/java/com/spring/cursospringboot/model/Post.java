@@ -26,6 +26,17 @@ public class Post {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
 
+    public Post() {
+
+    }
+
+    public Post(String titulo, String autor, String texto, LocalDate date) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.texto = texto;
+        this.date = date;
+    }
+
     public String getTitulo() {
         return titulo;
     }
