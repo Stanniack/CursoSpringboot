@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 
+/* Indica que é um Bean administrado pelo spring */
 @Component
 public class MockPost {
 
@@ -15,7 +16,7 @@ public class MockPost {
     PostRepository postRepository;
 
     /* Método é automaticamente chamada quando a aplicação for chamada (tipo um main) */
-    @PostConstruct
+    //@PostConstruct
     public void savePosts() {
         Post p1 = new Post("Aprendendo Spring Boot",
                 "Mateus", "Como entender spring boot em 1 semana", LocalDate.now());
