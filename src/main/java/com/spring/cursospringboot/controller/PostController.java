@@ -17,7 +17,7 @@ public class PostController {
     PostService postService;
 
     /* Diretório da página HTML e método HTTP */
-    @RequestMapping(value = "/posts", method = RequestMethod.GET)
+    @RequestMapping(value = "/postspage", method = RequestMethod.GET)
     public ModelAndView getPosts () {
 
         /* Cria a view, o arquivo html precisa ter o mesmo nome */
