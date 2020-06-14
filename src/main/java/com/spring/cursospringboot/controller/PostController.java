@@ -4,6 +4,7 @@ import com.spring.cursospringboot.model.Post;
 import com.spring.cursospringboot.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +29,21 @@ public class PostController {
 
         /* Relaciona variável view com o model (objetos do java) */
         mv.addObject("posts", posts);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/postspage/{id}", method = RequestMethod.GET)
+    public ModelAndView getPostDetails (@PathVariable("id") long id) {
+
+        /* Cria a view, o arquivo html precisa ter o mesmo nome */
+        ModelAndView mv = new ModelAndView("postsDetails");
+
+        /* Traz todos o post do bd */
+        Post post = postService.findById(id);
+
+        /* Relaciona variável view com o model (objeto do java) */
+        mv.addObject("post", post);
 
         return mv;
     }

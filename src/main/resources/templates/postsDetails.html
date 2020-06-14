@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+
+    <head>
+
+        <title>Posts!</title>
+
+        <!-- Bootstrap-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <!-- ícones do google -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+    <header>
+
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="/postspage">Todos os posts</a>
+        </nav>
+
+    </header>
+
+        <main>
+            <!-- Onde fica todo o conteúdo -->
+            <div class="container" style="width: 75%; padding-bottom: 30px;">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item" aria-current="page"><a href="/postspage">Posts</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Post - <span th:text="${post.titulo}"/></li>
+                    </ol>
+                </nav>
+
+                <article>
+
+                    <h1 class="card-title">
+                        <span style="font-weight: bold; margin-bottom: 20px" th:text="${post.titulo}"/>
+                    </h1>
+
+                    <p class="card-subtitle mb-2 text-muted">
+                        <i class="material-icons">person_outline</i>
+                        <span th:text="${post.autor}"/>
+
+                        <br>
+
+                        <i class="material-icons">date_range</i>
+                        <span th:text="${post.date}"/>
+                    </p>
+
+                    <section>
+                        <p class="card-text" style="margin-top: 60px">
+                            <span th:utext="${post.texto}"/>
+                        </p>
+                    </section>
+
+                </article>
+
+            </div>
+
+        </main>
+
+    </body>
+
+</html>

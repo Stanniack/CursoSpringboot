@@ -13,7 +13,7 @@
         <header>
 
             <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand" href="postspage.html">Todos os posts</a>
+                <a class="navbar-brand" href="/postspage">Posts</a>
             </nav>
 
         </header>
@@ -39,9 +39,13 @@
                         </p>
 
                         <a>
-                            <h4 class="card-title">
-                                <span th:text="${post.titulo}"/>
-                            </h4>
+                            <!-- Gerar href com o link do post no bd -->
+                            <!-- AbreviaçãoClasse#Método | 0, var do objeto | construção -->
+                            <a th:href="${#mvc.url('PC#getPostDetails').arg(0, post.id).build()}">
+                                <h4 class="card-title">
+                                    <span th:text="${post.titulo}"></span>
+                                </h4>
+                            </a>
                         </a>
 
                         <p class="card-text">
