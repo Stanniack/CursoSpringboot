@@ -26,7 +26,7 @@ public class PostController {
         /* Traz todos os posts do bd */
         List<Post> posts = postService.findAll();
 
-        /* Relaciona view com o model (objetos do java) */
+        /* Relaciona variável view com o model (objetos do java) */
         mv.addObject("posts", posts);
 
         return mv;
