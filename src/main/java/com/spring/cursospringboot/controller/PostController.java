@@ -4,11 +4,15 @@ import com.spring.cursospringboot.model.Post;
 import com.spring.cursospringboot.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -46,6 +50,29 @@ public class PostController {
         mv.addObject("post", post);
 
         return mv;
+    }
+
+    @RequestMapping(value = "/newpost", method = RequestMethod.GET)
+    public String getNewPost () {
+        return "/newpost";
+    }
+
+    @RequestMapping(value = "/newpost", method = RequestMethod.POST)
+    public String saveNewPost (@Valid Post post, BindingResult result, RedirectAttributes atributes) {
+
+        /* Se houver erros de validação, redireciona para a mesma página */
+        if (result.hasErrors()) {
+            return "redirect:/newpost";
+        }
+
+        post.setDate(LocalDate.now());
+        postService.save(post);
+
+        /* Salva e redireciona para os posts */
+        return "redirect:/posts";
+
+
+
     }
 
 }
