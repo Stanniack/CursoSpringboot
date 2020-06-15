@@ -23,7 +23,7 @@ public class PostController {
 
     /* Diretório da página HTML e método HTTP */
     @RequestMapping(value = "/postspage", method = RequestMethod.GET)
-    public ModelAndView getPosts () {
+    public ModelAndView getPosts() {
 
         /* Cria a view, o arquivo html precisa ter o mesmo nome */
         ModelAndView mv = new ModelAndView("posts");
@@ -38,7 +38,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "/postspage/{id}", method = RequestMethod.GET)
-    public ModelAndView getPostDetails (@PathVariable("id") long id) {
+    public ModelAndView getPostDetails(@PathVariable("id") long id) {
 
         /* Cria a view, o arquivo html precisa ter o mesmo nome */
         ModelAndView mv = new ModelAndView("postsDetails");
@@ -53,24 +53,23 @@ public class PostController {
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.GET)
-    public String getNewPost () {
+    public String getNewPost() {
         return "/newpost";
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.POST)
-    public String saveNewPost (@Valid Post post, BindingResult result, RedirectAttributes atributes) {
+    public String saveNewPost(@Valid Post post, BindingResult result, RedirectAttributes atributes) {
 
         /* Se houver erros de validação, redireciona para a mesma página */
         if (result.hasErrors()) {
             return "redirect:/newpost";
+        } else {
+            post.setDate(LocalDate.now());
+            postService.save(post);
         }
 
-        post.setDate(LocalDate.now());
-        postService.save(post);
-
         /* Salva e redireciona para os posts */
-        return "redirect:/posts";
-
+        return "redirect:/postspage";
 
 
     }
