@@ -2,9 +2,11 @@ package com.spring.cursospringboot.controller;
 
 import com.spring.cursospringboot.model.Post;
 import com.spring.cursospringboot.service.PostService;
+import net.bytebuddy.description.type.TypeDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,15 +60,16 @@ public class PostController {
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.POST)
-    public String saveNewPost(@Valid Post post, BindingResult result, RedirectAttributes atributes) {
+    public String saveNewPost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
 
         /* Se houver erros de validação, redireciona para a mesma página */
-        if (result.hasErrors()) {
+        if (result.hasFieldErrors()) {
+            attributes.addFlashAttribute("mensagem", "Algum campo está em branco");
             return "redirect:/newpost";
-        } else {
-            post.setDate(LocalDate.now());
-            postService.save(post);
         }
+
+        post.setDate(LocalDate.now());
+        postService.save(post);
 
         /* Salva e redireciona para os posts */
         return "redirect:/postspage";

@@ -5,7 +5,16 @@
     <title>Posts!</title>
     <!-- Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- Links para incluir summernote-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
 </head>
 
 <body>
@@ -31,17 +40,21 @@
         </nav>
 
         <div>
+
+            <!--Incluir uma página HTML por th:include-->
+            <th:block th:include="mensagemValidacao"></th:block>
+
             <form method="post">
 
                 <div class="form-group">
-                    <input class="form-control" name="titulo" placeholder="*Título">
+                    <input type="text" class="form-control" name="titulo" placeholder="*Título">
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control" name="autor" placeholder="*Autor">
+                    <input type="text" class="form-control" name="autor" placeholder="*Autor">
                 </div>
 
-                <textarea type="text" class="form-control" name="texto" placeholder="*Texto"></textarea>
+                <textarea id="summernote" type="text" class="form-control" name="texto" placeholder="*Texto"></textarea>
 
                 <small class="form-text text-muted" style="font-weight: bold">(*) São campos obrigatórios</small>
 
@@ -58,5 +71,14 @@
 </section>
 
 </body>
+
+<script>
+    $('#summernote').summernote({
+            placeholder: "*Insira um texto",
+            tabsize: 2,
+            height: 300
+        }
+    );
+</script>
 
 </html>
