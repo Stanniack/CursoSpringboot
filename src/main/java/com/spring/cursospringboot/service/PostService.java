@@ -28,4 +28,10 @@ public class PostService implements PostServiceInterface {
     public Post save(Post post) {
         return postRepository.save(post);
     }
+
+
+    @Override
+    public void delete(Post post) {
+        postRepository.delete(post);
+    }
 }

@@ -5,7 +5,13 @@
         <title>Posts!</title>
         <!-- Bootstrap-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <!-- ícones do google -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
 
     <body>
@@ -14,7 +20,7 @@
 
             <nav class="navbar navbar-light bg-light">
                 <a class="navbar-brand" href="/postspage">Posts</a>
-                <a href="/newpost" class="btn btn-primary" role="button">Novo Post</a>
+                    <a href="/newpost" class="btn btn-primary" role="button">Novo Post</a>
             </nav>
 
         </header>
@@ -30,9 +36,24 @@
                     </ol>
                 </nav>
 
-                <div class="card" style="margin-top: 20px" th:each="post : ${posts}">
+                <!-- Inclui msg de remoção -->
+                <th:block th:include="mensagemRemocao"></th:block>
 
-                    <div class="card-body">
+                <!-- Card -->
+                <div class="card" style="margin-top: 8px" th:each="post : ${posts}">
+
+                    <div class="card-body" style="padding-top: 10px">
+
+                        <!-- ícones -->
+                        <div style="margin-left: 92%; position: absolute";>
+                            <a href="#">
+                                <i style="font-size: 18px" class="material-icons">build</i>
+                            </a>
+
+                            <a href="#"data-toggle="modal" data-target="#modalExemplo">
+                                <i style="font-size: 18px" class="material-icons">delete</i>
+                            </a>
+                        </div>
 
                         <p class="card-subtitle mb-2 text-muted">
                             <span th:text="${post.autor}"/>
@@ -42,7 +63,7 @@
                         <a>
                             <!-- Gerar href com o link do post no bd -->
                             <!-- AbreviaçãoClasse#Método | 0, var do objeto | construção -->
-                            <a th:href="${#mvc.url('PC#getPostDetails').arg(0, post.id).build()}">
+                            <a data-toggle="modal" data-target="#modalExemplo">
                                 <h4 class="card-title">
                                     <span th:text="${post.titulo}"></span>
                                 </h4>
@@ -55,9 +76,34 @@
 
                     </div>
 
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><span th:text="${post.titulo}"></span></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Deseja remover este post?</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+                                    <a th:href="${#mvc.url('PC#removePost').arg(0, post.id).build()}">
+                                        <button type="button" class="btn btn-primary">Remover</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
+
         </section>
 
     </body>

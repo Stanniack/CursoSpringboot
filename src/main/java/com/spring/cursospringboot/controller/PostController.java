@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -45,7 +43,7 @@ public class PostController {
         /* Cria a view, o arquivo html precisa ter o mesmo nome */
         ModelAndView mv = new ModelAndView("postsDetails");
 
-        /* Traz todos o post do bd */
+        /* Traz o post do bd */
         Post post = postService.findById(id);
 
         /* Relaciona variável view com o model (objeto do java) */
@@ -63,7 +61,7 @@ public class PostController {
     public String saveNewPost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
 
         /* Se houver erros de validação, redireciona para a mesma página */
-        if (result.hasFieldErrors()) {
+        if (result.hasErrors()) {
             attributes.addFlashAttribute("mensagem", "Algum campo está em branco");
             return "redirect:/newpost";
         }
@@ -75,6 +73,18 @@ public class PostController {
         return "redirect:/postspage";
 
 
+    }
+
+    @RequestMapping(value = "/remove")
+    public String removePost (Long idPost, RedirectAttributes attributes) {
+
+        Post post = new Post();
+        post.setId(idPost);
+        postService.delete(post);
+
+        attributes.addFlashAttribute("msgRemove","Post removido.");
+
+        return "redirect:/postspage";
     }
 
 }
