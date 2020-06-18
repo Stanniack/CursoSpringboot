@@ -57,6 +57,11 @@ public class PostController {
         return "/newpost";
     }
 
+    @RequestMapping(value = "/updatePost", method = RequestMethod.GET)
+    public String getUpdatePost() {
+        return "/updatePost";
+    }
+
     @RequestMapping(value = "/newpost", method = RequestMethod.POST)
     public String saveNewPost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
 
@@ -64,6 +69,24 @@ public class PostController {
         if (result.hasErrors()) {
             attributes.addFlashAttribute("mensagem", "Algum campo está em branco");
             return "redirect:/newpost";
+        }
+
+        post.setDate(LocalDate.now());
+        postService.save(post);
+
+        /* Salva e redireciona para os posts */
+        return "redirect:/postspage";
+
+
+    }
+
+    @RequestMapping(value = "/updatePost", method = RequestMethod.POST)
+    public String updateNewPost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
+
+        /* Se houver erros de validação, redireciona para a mesma página */
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute("mensagem", "Algum campo está em branco");
+            return "redirect:/updatePost";
         }
 
         post.setDate(LocalDate.now());
