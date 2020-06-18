@@ -65,7 +65,9 @@
                             <!-- AbreviaçãoClasse#Método | 0, var do objeto | construção -->
                             <a data-toggle="modal" data-target="#modalExemplo">
                                 <h4 class="card-title">
-                                    <span th:text="${post.titulo}"></span>
+                                    <a th:href="${#mvc.url('PC#getPostDetails').arg(0, post.id).build()}">
+                                        <span th:text="${post.titulo}"></span>
+                                    </a>
                                 </h4>
                             </a>
                         </a>
