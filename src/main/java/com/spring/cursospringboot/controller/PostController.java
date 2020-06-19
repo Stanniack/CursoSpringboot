@@ -2,11 +2,9 @@ package com.spring.cursospringboot.controller;
 
 import com.spring.cursospringboot.model.Post;
 import com.spring.cursospringboot.service.PostService;
-import net.bytebuddy.description.type.TypeDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,11 +35,26 @@ public class PostController {
         return mv;
     }
 
-    @RequestMapping(value = "/postspage/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/postdetail/{id}", method = RequestMethod.GET)
     public ModelAndView getPostDetails(@PathVariable("id") long id) {
 
         /* Cria a view, o arquivo html precisa ter o mesmo nome */
         ModelAndView mv = new ModelAndView("postsDetails");
+
+        /* Traz o post do bd */
+        Post post = postService.findById(id);
+
+        /* Relaciona variável view com o model (objeto do java) */
+        mv.addObject("post", post);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/editpost/{id}", method = RequestMethod.GET)
+    public ModelAndView editPost(@PathVariable("id") long id) {
+
+        /* Cria a view, o arquivo html precisa ter o mesmo nome */
+        ModelAndView mv = new ModelAndView("editpost");
 
         /* Traz o post do bd */
         Post post = postService.findById(id);
@@ -57,11 +70,6 @@ public class PostController {
         return "/newpost";
     }
 
-    @RequestMapping(value = "/updatePost", method = RequestMethod.GET)
-    public String getUpdatePost() {
-        return "/updatePost";
-    }
-
     @RequestMapping(value = "/newpost", method = RequestMethod.POST)
     public String saveNewPost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
 
@@ -69,24 +77,6 @@ public class PostController {
         if (result.hasErrors()) {
             attributes.addFlashAttribute("mensagem", "Algum campo está em branco");
             return "redirect:/newpost";
-        }
-
-        post.setDate(LocalDate.now());
-        postService.save(post);
-
-        /* Salva e redireciona para os posts */
-        return "redirect:/postspage";
-
-
-    }
-
-    @RequestMapping(value = "/updatePost", method = RequestMethod.POST)
-    public String updateNewPost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
-
-        /* Se houver erros de validação, redireciona para a mesma página */
-        if (result.hasErrors()) {
-            attributes.addFlashAttribute("mensagem", "Algum campo está em branco");
-            return "redirect:/updatePost";
         }
 
         post.setDate(LocalDate.now());

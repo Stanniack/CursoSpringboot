@@ -46,7 +46,7 @@
 
                         <!-- ícones -->
                         <div style="margin-left: 92%; position: absolute";>
-                            <a href="#">
+                            <a th:href="${#mvc.url('PC#editPost').arg(0, post.id).build()}">
                                 <i style="font-size: 18px" class="material-icons">build</i>
                             </a>
 
@@ -63,7 +63,7 @@
                         <a>
                             <!-- Gerar href com o link do post no bd -->
                             <!-- AbreviaçãoClasse#Método | 0, var do objeto | construção -->
-                            <a data-toggle="modal" data-target="#modalExemplo">
+                            <a th:href="${#mvc.url('PC#getPostDetails').arg(0, post.id).build()}">
                                 <h4 class="card-title">
                                     <span th:text="${post.titulo}"></span>
                                 </h4>

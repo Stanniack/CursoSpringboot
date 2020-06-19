@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org/">
+<html xmlns:th="https://www.thymeleaf.org/">
 
 <head>
     <title>Posts!</title>
@@ -35,19 +35,18 @@
         <nav aria-label="breadcrumb" style="padding: 10px">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" aria-current="page"><a href="/postspage">Posts</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Post</li>
+                <li class="breadcrumb-item active" aria-current="page">Editar Post - <span th:text="${post.titulo}"></span></li>
             </ol>
         </nav>
 
         <div>
-
             <!--Incluir uma página HTML por th:include-->
             <th:block th:include="mensagemValidacao"></th:block>
 
             <form method="post">
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="titulo" placeholder="*Título">
+                    <input type="text" class="form-control" name="titulo" placeholder="*Título" th:utext="${post.texto}">
                 </div>
 
                 <div class="form-group">
