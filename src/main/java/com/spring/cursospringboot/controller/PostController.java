@@ -85,7 +85,6 @@ public class PostController {
         /* Salva e redireciona para os posts */
         return "redirect:/postspage";
 
-
     }
 
     @RequestMapping(value = "/remove")
