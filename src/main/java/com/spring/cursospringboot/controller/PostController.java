@@ -70,6 +70,11 @@ public class PostController {
         return "/newpost";
     }
 
+    @RequestMapping(value = "/editpost", method = RequestMethod.GET)
+    public String getEditPost() {
+        return "/editpost";
+    }
+
     @RequestMapping(value = "/newpost", method = RequestMethod.POST)
     public String saveNewPost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
 
@@ -83,6 +88,25 @@ public class PostController {
         postService.save(post);
 
         /* Salva e redireciona para os posts */
+        return "redirect:/postspage";
+
+    }
+
+    @RequestMapping(value = "/editpost", method = RequestMethod.POST)
+    public String updatePost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
+
+        /* Se houver erros de validação, redireciona para a mesma página */
+        if (post.getTitulo().equals("") || post.getAutor().equals("") || post.getTexto().equals("")) {
+            attributes.addFlashAttribute("mensagem", "Algum campo está em branco");
+            /* Dando pau */
+            return "redirect:/editpost";
+        }
+
+        post.setDate(LocalDate.now());
+        /* Atualizar */
+        //postService.save(post);
+
+        /* Atualiza e redireciona para os posts */
         return "redirect:/postspage";
 
     }

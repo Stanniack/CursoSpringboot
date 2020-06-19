@@ -43,17 +43,17 @@
             <!--Incluir uma página HTML por th:include-->
             <th:block th:include="mensagemValidacao"></th:block>
 
-            <form method="post">
+            <form method="post" action="/editpost">
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="titulo" placeholder="*Título" th:utext="${post.texto}">
+                    <input type="text" class="form-control" name="titulo" placeholder="*Título">
                 </div>
 
                 <div class="form-group">
                     <input type="text" class="form-control" name="autor" placeholder="*Autor">
                 </div>
 
-                <textarea id="summernote" type="text" class="form-control" name="texto" placeholder="*Texto"></textarea>
+                <textarea id="summernote" type="text" class="form-control" name="texto" placeholder="*Texto" th:utext="${post.texto}"></textarea>
 
                 <small class="form-text text-muted" style="font-weight: bold">(*) São campos obrigatórios</small>
 
